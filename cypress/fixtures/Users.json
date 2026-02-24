@@ -1,0 +1,32 @@
+[
+  {
+    "username": "standard_user",
+    "password": "s3cret_sauce",
+    "description": "normal user"
+  },
+  {
+    "username": "locked_out_user",
+    "password": "s3cret_sauce",
+    "description": "user locked out for testing errors"
+  },
+  {
+    "username": "problem_user",
+    "password": "s3cret_sauce",
+    "description": "user with display issues"
+  },
+  {
+    "username": "performance_glitch_user",
+    "password": "s3cret_sauce",
+    "description": "user to simulate performance issues"
+  },
+  {
+    "username": "error_user",
+    "password": "s3cret_sauce",
+    "description": ""
+  },
+  {
+    "username": "visual_user",
+    "password": "s3cret_sauce",
+    "description": ""
+  }
+]
