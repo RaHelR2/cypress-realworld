@@ -1,32 +1,44 @@
 [
   {
     "username": "standard_user",
-    "password": "s3cret_sauce",
-    "description": "normal user"
+    "password": "secret_sauce",
+    "validLogin": true,
+    "ValidSort": true,
+    "expectedError": null
   },
   {
     "username": "locked_out_user",
-    "password": "s3cret_sauce",
-    "description": "user locked out for testing errors"
+    "password": "secret_sauce",
+    "validLogin": false,
+    "ValidSort": false,
+    "expectedError": "Epic sadface: Sorry, this user has been locked out."
   },
   {
     "username": "problem_user",
-    "password": "s3cret_sauce",
-    "description": "user with display issues"
+    "password": "secret_sauce",
+    "validLogin": true,
+    "ValidSort": false,
+    "expectedError": null
   },
   {
     "username": "performance_glitch_user",
-    "password": "s3cret_sauce",
-    "description": "user to simulate performance issues"
+    "password": "secret_sauce",
+    "validLogin": true,
+    "ValidSort": true,
+    "expectedError": null
   },
   {
     "username": "error_user",
-    "password": "s3cret_sauce",
-    "description": ""
+    "password": "secret_sauce",
+    "validLogin": true,
+    "ValidSort": false,
+    "expectedError": null
   },
   {
     "username": "visual_user",
-    "password": "s3cret_sauce",
-    "description": ""
+    "password": "secret_sauce",
+    "validLogin": true,
+    "ValidSort": false,
+    "expectedError": null
   }
 ]

@@ -22,12 +22,13 @@ Cypress.Commands.add('closeError',() => {
     cy.get('[data-test="error"]').should('not.exist')
 })
 
-Cypress.Commands.add('selectRandomValidUser', () => {
+Cypress.Commands.add('selectRandomValidUser', (validation) => {
 
   cy.fixture('users').then((users) => {
 
     // Filter only valid users
-    const validUsers = users.filter(user => user.validLogin === true)
+    const filterKey = validation === 'sort' ? 'ValidSort' : 'validLogin';
+    const validUsers = users.filter(user => user[filterKey] === true);
 
     // Safety check
     if (validUsers.length === 0) {
@@ -49,5 +50,12 @@ Cypress.Commands.add('loginAsUser', () => {
     cy.get('#user-name').type(user.username)
     cy.get('#password').type(user.password)
     cy.get('#login-button').click()
+  })
+})
+
+Cypress.Commands.add('addRandomProductToCart', () => {
+  cy.get('.inventory_item').its('length').then((length) => {
+    const randomIndex = Math.floor(Math.random() * length)
+    cy.get('.inventory_item').eq(randomIndex).find('button').click()
   })
 })

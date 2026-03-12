@@ -79,4 +79,16 @@ describe('Login Test', function(){
     cy.closeError()
   })
 
+  it('can log out successfully', () => {
+    cy.visit('/')
+    cy.fixture('selectedUser').then((user) => {
+      cy.get('#user-name').type(user.username)
+      cy.get('#password').type(user.password)
+    })
+    cy.get('#login-button').click()
+    cy.url().should('include', '/inventory.html')
+    cy.get('#react-burger-menu-btn').click()
+    cy.get('#logout_sidebar_link').click()
+    cy.url().should('not.include', '/index.html')
+  })
 })

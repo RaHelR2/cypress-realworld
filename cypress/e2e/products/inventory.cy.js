@@ -1,6 +1,8 @@
 describe('Inventory Page', () => {
+  before(() => {
+    cy.selectRandomValidUser('sort')
+  })
   beforeEach(() => {
-    //cy.selectRandomValidUser()
     cy.loginAsUser()
   })
   
@@ -55,6 +57,13 @@ describe('Inventory Page', () => {
       const nameValues = $names.map((index, html) => html.innerText).get()
       const sortedNames = [...nameValues].sort().reverse()
       expect(nameValues).to.deep.equal(sortedNames)
+    })
+  })
+
+  it('should have add to cart buttons for each product', () => {
+    cy.url().should('include', '/inventory.html')
+    cy.get('.inventory_item').each(($item) => {
+      cy.wrap($item).find('button').should('be.visible').and('contain', 'Add to cart')
     })
   })
 
