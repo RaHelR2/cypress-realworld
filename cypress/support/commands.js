@@ -59,3 +59,10 @@ Cypress.Commands.add('addRandomProductToCart', () => {
     cy.get('.inventory_item').eq(randomIndex).find('button').click()
   })
 })
+
+Cypress.Commands.add('removeRandomProductFromCart', () => {
+  cy.contains('Remove').its('length').then((length) => {
+    const randomIndex = Math.floor(Math.random() * length)
+    cy.contains('Remove').eq(randomIndex).click()
+  })
+})
