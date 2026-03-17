@@ -54,15 +54,97 @@ Cypress.Commands.add('loginAsUser', () => {
 })
 
 Cypress.Commands.add('addRandomProductToCart', () => {
-  cy.get('.inventory_item').its('length').then((length) => {
-    const randomIndex = Math.floor(Math.random() * length)
-    cy.get('.inventory_item').eq(randomIndex).find('button').click()
+  cy.get('.inventory_item').then((items) => {
+    const available = items.filter((i, el) => 
+      el.querySelector('[data-test^="add-to-cart"]')
+    )
+    const randomIndex = Math.floor(Math.random() * available.length)
+
+    cy.wrap(available[randomIndex])
+      .find('[data-test^="add-to-cart"]')
+      .click()
+
   })
 })
 
 Cypress.Commands.add('removeRandomProductFromCart', () => {
-  cy.contains('Remove').its('length').then((length) => {
-    const randomIndex = Math.floor(Math.random() * length)
-    cy.contains('Remove').eq(randomIndex).click()
+   cy.get('.inventory_item').then((items) => {
+    const available = items.filter((i, el) => 
+      el.querySelector('[data-test^="remove"]')
+    )
+    const randomIndex = Math.floor(Math.random() * available.length)
+
+    cy.wrap(available[randomIndex])
+      .find('[data-test^="remove"]')
+      .click()
   })
+})
+
+Cypress.Commands.add('getCartCount', () => {
+  cy.get('body').then(($body) => {
+    if ($body.find('.shopping_cart_badge').length) {
+      cy.get('.shopping_cart_badge')
+        .invoke('text')
+        .then(Number)
+    } else {
+      cy.wrap(0)
+    }
+  })
+})
+
+Cypress.Commands.add('verifyCartBadge', (count) => {
+  cy.get('.shopping_cart_badge')
+    .should('be.visible')
+    .and('have.text', count.toString())
+})
+
+Cypress.Commands.add('openRandomAvailableProduct', (add=false) => {
+
+  cy.get('.inventory_item').then((items) => {
+
+    const available = items.filter((index, el) =>
+      el.querySelector('[data-test^="add-to-cart"]')
+    )
+
+    const randomIndex = Math.floor(Math.random() * available.length)
+
+    cy.wrap(available[randomIndex])
+      .find('.inventory_item_name')
+      .click()
+
+  })
+  if (add) {
+    cy.get('[data-test^="add-to-cart"]').should('be.visible').click()
+  }
+})
+
+Cypress.Commands.add('openRandomAddedProduct', (remove=false) => {
+
+  cy.get('.inventory_item').then((items) => {
+
+    const removable = items.filter((index, el) =>
+      el.querySelector('[data-test^="remove"]')
+    )
+
+    const randomIndex = Math.floor(Math.random() * removable.length)
+
+    cy.wrap(removable[randomIndex])
+      .find('.inventory_item_name')
+      .click()
+
+  })
+  if (remove) {
+    cy.get('[data-test^="remove"]').should('be.visible').click()
+  }
+
+})
+
+Cypress.Commands.add('ResetWebsite',() =>{
+  cy.visit('/')
+  cy.get('#user-name').type('standard_user')
+  cy.get('#password').type('secret_sauce')
+  cy.get('#login-button').click()
+  cy.url().should('include', '/inventory.html')
+  cy.get('#react-burger-menu-btn').click()
+  cy.get('#reset_sidebar_link').click().wait(500)
 })

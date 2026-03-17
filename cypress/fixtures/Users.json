@@ -24,7 +24,7 @@
     "username": "performance_glitch_user",
     "password": "secret_sauce",
     "validLogin": true,
-    "ValidSort": true,
+    "ValidSort": false,
     "expectedError": null
   },
   {
