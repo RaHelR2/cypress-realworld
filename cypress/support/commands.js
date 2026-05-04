@@ -144,7 +144,14 @@ Cypress.Commands.add('ResetWebsite',() =>{
   cy.get('#user-name').type('standard_user')
   cy.get('#password').type('secret_sauce')
   cy.get('#login-button').click()
-  cy.url().should('include', '/inventory.html')
+  cy.url().should('include', '/inventory.html').wait(2000)
   cy.get('#react-burger-menu-btn').click()
   cy.get('#reset_sidebar_link').click().wait(500)
+})
+
+Cypress.Commands.add('FillCartWithRandomProducts', () => {
+  const count = Math.floor(Math.random() * 5) + 1
+  for (let i = 0; i < count; i++) {
+    cy.addRandomProductToCart()
+  }
 })
